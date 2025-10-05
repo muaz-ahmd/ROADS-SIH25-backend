@@ -3,9 +3,9 @@ from pydantic import BaseModel
 from typing import Dict
 from fastapi.middleware.cors import CORSMiddleware
 # Local Imports
-from model import TrafficInput
-from cps import  calculate_traffic_score,calculate_safety_penalty,calculate_green_wave_bonus,calculate_cps
-from green_time import total_clear_time_and_rows
+from backend.model import TrafficInput
+from backend.cps import  calculate_traffic_score,calculate_safety_penalty,calculate_green_wave_bonus,calculate_cps
+from backend.green_time import total_clear_time_and_rows
 
 # Initialize FastAPI app
 app = FastAPI()
@@ -65,4 +65,5 @@ def get_signal_data(signal_id: int):
 def get_intersection_summary():
     for i in signal_data_store.keys():
         return signal_data_store[i]
+
     return {"message": "No data available"}
