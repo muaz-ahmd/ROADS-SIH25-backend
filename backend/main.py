@@ -25,12 +25,17 @@ signal_data_store: Dict[str, Dict] = {}
 @app.get("/")
 def read_root():
     return {"message": "Server is up and running"}
+
+@app.post("/serverinitialization")
+def initialize_server():
+    return {"message": "Server starting, good things take time"}
+    
 # Per-Signal Endpoint
 @app.post("/intersection1/traffic{signal_id}")
 def process_signal(signal_id: int, data: TrafficInput):
     if signal_id not in [1, 2, 3, 4]:
         return {"error": "Signal ID must be 1, 2, 3, or 4"}
-
+    
     # Compute CPS
     traffic_score = calculate_traffic_score(data.vehicle_counts.dict())
     safety_penalty = calculate_safety_penalty(data.hard_brakes, data.tailgating_events)
@@ -67,3 +72,4 @@ def get_intersection_summary():
         return signal_data_store[i]
 
     return {"message": "No data available"}
+
